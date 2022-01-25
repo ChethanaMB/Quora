@@ -49,6 +49,9 @@ function QHeader(){
  <div className="qHeader__icon">
  <ExitToAppOutlined />
  </div>
+ <div className="qHeader__icon">
+ <Button>Add Question</Button>
+ </div>
  
  </div>
  </div>

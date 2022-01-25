@@ -32,25 +32,63 @@ logout = (event)=>{
   this.setState({loginstatus:true}) 
   Store.dispatch({...ACTION_USER_LOGOUT})
 } 
-componentDidMount()
+async answers () {
+  let i=0;
+  
+ }
+async componentDidMount ()
 {
     //console.log(this.props.User)
 
     this.setState({Users:this.props.User})
     // console.log(this.props.User.email)
     // console.log(this.props.User.deptId)
-    fetch(`http://localhost:8082/web/getquestion/${this.props.User.deptId}`)
+    await fetch(`http://localhost:8082/web/getquestion/${this.props.User.deptId}`)
     .then(response=>response.json()).then(data=>{
-      //console.log(data)
-      this.setState({questions:data.data})
-      console.log(data.quesId)
+      console.log(data)
+      this.setState({questions:data.data},()=>{
+        console.log("hello")
+      })
     })
-    
-    fetch(`http://localhost:8082/web/answer/${this.props.User.quesId}`)
-    .then(response=>response.json()).then(data=>{
-      //console.log(data)
-      this.setState({answers:data.data})
-    })
+    console.log(this.state.questions)
+    let i=0;
+    let urllist=[]
+  for(i;i< this.state.questions.length;i++){
+      const response = await fetch(`http://localhost:8082/web/answer/${this.state.questions[i].quesId}`)
+      const answer1 = await response.json()
+      urllist.push(answer1)
+      //console.log("answers fetching",urllist)
+      //console.log("answer is :",answer1.data.answer)
+
+    }
+    this.setState({answers:urllist})
+    console.log("answer is",urllist[0].data.answer)
+    // for(let i=0;i<this.state.questions.length;i++){
+    //   await fetch(`http://localhost:8082/web/answer/${this.state.questions[i].quesId}`)
+    //   .then(response=>response.json()).then(data=>{
+    //     //console.log(data)
+    //     this.setState({answers:data.data}, ()=>{
+    //       console.log("print answers")
+    //     })
+    //   })
+    // }
+    // this.state.questions.map((data)=>{
+    //   //console.log("chethana")
+    //   console.log(data.quesId)
+    //   fetch(`http://localhost:8082/web/answer/${data.quesId}`)
+    //   .then(response=>response.json()).then(data=>{
+    //     //console.log(data)
+    //     this.setState({answers:data.data}, ()=>{
+    //       console.log("print answers")
+    //     })
+    //   })
+    // })
+    console.log("answers", this.state.answers)
+    // fetch(`http://localhost:8082/web/answer/${this.props.User.quesId}`)
+    // .then(response=>response.json()).then(data=>{
+    //   //console.log(data)
+    //   this.setState({answers:data.data})
+    // })
     fetch(`http://localhost:8082/web/getsubject/${this.props.User.deptId}`)
     .then(response=>response.json()).then(data=>{
       //console.log(data.data)
@@ -94,7 +132,7 @@ componentDidMount()
         <div className="quora__content">
         <div>
           <Sidebar subjects={this.state.subjects}/>
-          <SPost questions={this.state.questions}/>
+          <SPost questions={this.state.questions} answers={this.state.answers}/>
           </div>  
           </div>
           

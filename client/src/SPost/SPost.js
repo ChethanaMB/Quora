@@ -6,6 +6,9 @@ function SPost(props) {
   return(
     <div>
     {props.questions.map((data) => {
+      let i=0
+for( let i=0;i<props.answers.length;i++){
+       
       return (
         <div key = {data.quesId} className="center">
           <div className="center">
@@ -14,11 +17,13 @@ function SPost(props) {
               alt=""
             /> */}
             <p >{data.question}</p>
-            <p>..</p>
+            <p>{props.answers[i].data.answer}</p>
             {/* <textarea type="text" placeholder="Enter your question or link"/> */}
           </div>
       </div>
       );
+    //  break;
+  }
     })}
  
     </div>
