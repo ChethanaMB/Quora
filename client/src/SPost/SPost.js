@@ -3,27 +3,30 @@ import React from "react";
 import "./Spost.css";
 
 function SPost(props) {
+  const answers = props.answers
+  //console.log(answers[answers.length-1], "spost.js")
   return(
     <div>
-    {props.questions.map((data) => {
+    {props.questions.map((data, j) => {
       let i=0
-for( let i=0;i<props.answers.length;i++){
+//for( let i=0;i<props.answers.length;i++){
        
       return (
-        <div key = {data.quesId} className="center">
-          <div className="center">
+        
+         <div key = {data.quesId} className="center">
+         {/* <div className="center"> */}
             {/* <img
               src="https://graphicriver.img.customer.envatousercontent.com/files/241137299/KidReadingPreview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=b623860963df082ee8b5cb4ce6aa5912"
               alt=""
             /> */}
             <p >{data.question}</p>
-            <p>{props.answers[i].data.answer}</p>
+            <p>{answers[j]}</p>
             {/* <textarea type="text" placeholder="Enter your question or link"/> */}
           </div>
-      </div>
+      // </div>
       );
     //  break;
-  }
+  //}
     })}
  
     </div>

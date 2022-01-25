@@ -56,13 +56,26 @@ async componentDidMount ()
   for(i;i< this.state.questions.length;i++){
       const response = await fetch(`http://localhost:8082/web/answer/${this.state.questions[i].quesId}`)
       const answer1 = await response.json()
-      urllist.push(answer1)
+      console.log(answer1)
+      if(answer1.data !== null){
+        urllist.push(answer1.data.answer)
+        console.log(answer1.data.answer, "answer 1 is printing")
+      }
+      else{
+        urllist.push("")
+      }
+      
+      //urllist.push(answer1)
       //console.log("answers fetching",urllist)
       //console.log("answer is :",answer1.data.answer)
 
     }
-    this.setState({answers:urllist})
-    console.log("answer is",urllist[0].data.answer)
+    this.setState({answers:urllist}, ()=>{
+
+    })
+    //console.log(this.state.answers, "IN dashboard")
+
+    //console.log("answer is",urllist[0].data.answer)
     // for(let i=0;i<this.state.questions.length;i++){
     //   await fetch(`http://localhost:8082/web/answer/${this.state.questions[i].quesId}`)
     //   .then(response=>response.json()).then(data=>{
@@ -121,11 +134,34 @@ async componentDidMount ()
 
     console.log(this.props.User)
 }
+
+postquestion = (event)=>{
+  var ob = {
+      quesId:this.quesId.value,
+      question:this.question.value,
+      quesDate:this.quesDate.value,
+      quesState:this.quesState.value,
+      deptId: this.deptId.value,
+  }
+ fetch(`http://localhost:8082/web/postquestion`,{
+      method : 'POST',
+      headers:{
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(ob)
+  }).then(response=>response.json()).then(data=>{
+      console.log(data)
+      this.setState({questions:data.data})
+  });;
+  console.log(ob)
+  event.preventDefault()
+}
+
  
  render(){
  return (
  <div>
- <QHeader logout={this.logout}/>
+ <QHeader logout={this.logout} postquestion={this.postquestion}/>
  <h1>{this.props.User.email}</h1>
  <h2>{this.props.User.deptId}</h2>
  <div className="quora__contents">

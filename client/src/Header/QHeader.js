@@ -13,7 +13,7 @@ import {
 //import CloseIcon from "@material-ui/icons/Close";
 import { Avatar, Button, Input } from "@material-ui/core";
 import "./QHeader.css";
-function QHeader(){
+function QHeader(props){
  
  return (
  <div className="qHeader">
@@ -50,7 +50,7 @@ function QHeader(){
  <ExitToAppOutlined />
  </div>
  <div className="qHeader__icon">
- <Button>Add Question</Button>
+ <Button onClick={(event)=> this.postquestion(event)}>Add Question </Button>
  </div>
  
  </div>
